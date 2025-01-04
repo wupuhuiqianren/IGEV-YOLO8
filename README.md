@@ -9,6 +9,6 @@ Conbine IGEV++ with YOLO8，used for auto driving occasion
 2.Jetpack AGX Orin 平台部署
 
 # 运行环境
-Python3.8
+参考IGEVplusplus文件夹内的readme.md
 
 
