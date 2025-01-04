@@ -11,4 +11,8 @@ Conbine IGEV++ with YOLO8，used for auto driving occasion
 # 运行环境
 参考IGEVplusplus文件夹内的readme.md
 
+# 模型准备
+你需要先准备相应的YOLO模型和IGEV模型（通常是.pth格式的pytorch模型），无论是自己训练或者下载预训练模型（可以从【项目说明】中的仓库下载），但请确保你的模型可以正常完成推理。本部署基于下载好的预训练模型。
+
+
 
