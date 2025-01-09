@@ -10,7 +10,15 @@ Conbine IGEV++ with YOLO8 segment，used for auto driving occasions
 
 # 运行环境
 参考IGEVplusplus文件夹内的readme.md
-
+```bash
+pip install tqdm
+pip install scipy
+pip install opencv-python
+pip install scikit-image
+pip install tensorboard
+pip install matplotlib 
+pip install timm==0.5.4
+```
 # 模型准备
 你需要先准备相应的YOLO模型和IGEV模型（通常是.pth格式的pytorch模型），无论是自己训练或者下载预训练模型（可以从【项目说明】中的仓库下载），但请确保你的模型可以正常完成推理。本部署基于下载好的预训练模型。
 相关模型也可以从我的google drive下载
