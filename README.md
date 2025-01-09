@@ -64,6 +64,22 @@ trtexec
 trtexec --onnx=your_name_of_onnx_model.onnx  --saveEngine=your_name_of_engine.engine --fp16
 ```
 
-转换完成后，你可以使用
-
+转换完成后，你可以使用 igev_yolo_segment.py 在windows上运行推理。
+注意，你首先需要一个双目摄像头设备，并调整参数，以及模型路径
+```python
+    # 摄像头参数
+    focal_length_mm = 3.0
+    baseline = 60.0
+    sensor_width_mm = 8.47
+    image_width = 640
+    focal_length_pixels = (focal_length_mm * image_width) / sensor_width_mm
+```
+```python
+    '''
+    这里放模型路径
+    '''
+    model_path = "your.engine" #YOLO MODEL
+    model_path_depth = "your.engine" #IGEV MODEL
+```
+完成后运行这个python程序。
 
