@@ -16,7 +16,18 @@ Conbine IGEV++ with YOLO8 segment，used for auto driving occasions
 相关模型也可以从我的google drive下载
 [YOLO模型（ONNX格式）](https://drive.google.com/drive/folders/1jTuoAWUdAMZGFGJIEzNLa7_GrNLIS4ds?usp=sharing)
 
-[IGEV模型（ONNX格式）]()
+[IGEV模型（ONNX格式）](https://drive.google.com/drive/folders/18nu_z_qmnXnhEStgzXqOK7igYER9oS2O?usp=sharing)
+
+# 模型转换
+IGEVplusplus/transform_IGEV++.py 用于转换IGEV++的pytorch模型为ONNX模型
+IGEVplusplus/transform_RTIGEV.py 用于转换rt版本的IGEV++的pytorch模型为ONNX模型
+
+你需要根据实际情况配置你的模型路径。
+```python
+parser.add_argument('--restore_ckpt', help="put your dir of .pth model here",
+default="IGEVplusplus/pretrained_models/igev_plusplus/sceneflow.pth")
+```
+
 
 
 
