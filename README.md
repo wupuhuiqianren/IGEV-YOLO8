@@ -10,6 +10,7 @@ Conbine IGEV++ with YOLO8 segment，used for auto driving occasions
 
 # 运行环境
 参考IGEVplusplus文件夹内的readme.md
+推荐使用cuda11.4及以上,tensorrt8.5.1及以上，pytorch版本根据cuda对应
 ```bash
 pip install tqdm
 pip install scipy
@@ -46,9 +47,23 @@ default="IGEVplusplus/pretrained_models/igev_plusplus/sceneflow.pth")
 
 
 如果你需要使用Tensorrt加速，务必安装8.5.1版本及以上，否则转换模型时会遇到不支持的算子grid_sample。确保你的cuda,pytorch版本匹配，如果没有安装pycuda，务必安装相应的版本，否则也可能造成转换失败。
+首先根据你解压Tensorrt的位置，添加系统环境变量：
+```bash
+/your path/TensorRT-XXX/bin
+/your path/TensorRT-XXX/lib
+/your path/TensorRT-XXX/include
+```
+运行命令行语句验证
+```bash
+trtexec
+```
+出现版本号等信息，显示"passed"即为安装成功。
 
+命令行cd语句进入模型所在文件夹，运行命令行语句。请更换“your_name_of_onnx_model”为自己的onnx模型名称，更换“your_name_of_engine”为你想要的tensorrt模型的名称
+```bash
+trtexec --onnx=your_name_of_onnx_model.onnx  --saveEngine=your_name_of_engine.engine --fp16
+```
 
-
-
+转换完成后，你可以使用
 
 
