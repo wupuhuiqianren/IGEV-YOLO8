@@ -5,6 +5,15 @@ import numpy as np
 import pycuda.driver as cuda
 import pycuda.autoinit
 import cv2
+import ctypes
+
+# TensorRT Logger
+TRT_LOGGER = trt.Logger(trt.Logger.VERBOSE)
+# 手动加载插件库
+ctypes.CDLL("/usr/lib/aarch64-linux-gnu/libnvinfer_plugin.so", mode=ctypes.RTLD_GLOBAL)
+
+# 注册所有插件
+trt.init_libnvinfer_plugins(TRT_LOGGER, namespace="")
 
 classes = {0: 'person', 1: 'bicycle', 2: 'car', 3: 'motorcycle', 5: 'bus', 6: 'train', 7: 'truck',
            9: 'traffic light'}
@@ -46,9 +55,9 @@ class YOLOv8Seg:
 
         # Create execution context
         self.context = self.engine.create_execution_context()
-        self.num_bindings = self.engine.num_io_tensors
+        self.num_bindings = self.engine.num_bindings
         # Get model width and height (YOLOv8-seg only has one input)
-        self.model_height, self.model_width = self.engine.get_tensor_shape("images")[-2:]
+        self.model_height, self.model_width = self.engine.get_binding_shape("images")[-2:]
 
         # Allocate memory for inputs and outputs
         self.inputs = []
@@ -56,20 +65,20 @@ class YOLOv8Seg:
         self.bindings = []
 
         for binding_index in range(self.num_bindings):
-            binding_name = self.engine.get_tensor_name(binding_index)
-            dtype = self.engine.get_tensor_dtype(binding_name)
-            shape = self.engine.get_tensor_shape(binding_name)
+            binding_name = self.engine.get_binding_name(binding_index)
+            dtype = self.engine.get_binding_dtype(binding_name)
+            shape = self.engine.get_binding_shape(binding_name)
             size = trt.volume(shape) * np.dtype(np.float32).itemsize
             host_mem = np.empty(shape, dtype=np.float32)
             device_mem = cuda.mem_alloc(host_mem.nbytes)
-            if self.engine.get_tensor_mode(binding_name) == trt.TensorIOMode.INPUT:
+            if self.engine.binding_is_input(binding_name):
                 self.inputs.append({"host": host_mem, "device": device_mem})
             else:
                 self.outputs.append({"host": host_mem, "device": device_mem})
             self.bindings.append(int(device_mem))
 
         # Numpy dtype: support both FP32 and FP16 TensorRT model
-        self.ndtype = np.float16 if self.engine.get_tensor_dtype(binding_name) == trt.float16 else np.float32
+        self.ndtype = np.float16 if self.engine.get_binding_dtype(binding_name) == trt.float16 else np.float32
 
         # Load COCO class names
         self.classes = classes
@@ -98,8 +107,8 @@ class YOLOv8Seg:
 
         # 解析输出
         preds = [
-            self.outputs[0]['host'].reshape(self.engine.get_tensor_shape(self.engine.get_tensor_name(1))),
-            self.outputs[1]['host'].reshape(self.engine.get_tensor_shape(self.engine.get_tensor_name(2)))
+            self.outputs[0]['host'].reshape(self.engine.get_binding_shape(self.engine.get_binding_name(1))),
+            self.outputs[1]['host'].reshape(self.engine.get_binding_shape(self.engine.get_binding_name(2)))
         ]
 
         # 后处理
@@ -151,9 +160,10 @@ class YOLOv8Seg:
 
     def postprocess(self, preds, im0, ratio, pad_w, pad_h, conf_threshold, iou_threshold, nm=32):
 
-        x, protos = preds[0], preds[1]  # Two outputs: predictions and protos
+        protos,x = preds[0], preds[1]  # Two outputs: predictions and protos
 
         # Transpose the first output: (Batch_size, xywh_conf_cls_nm, Num_anchors) -> (Batch_size, Num_anchors, xywh_conf_cls_nm)
+        
         x = np.einsum('bcn->bnc', x)
 
         # Predictions filtering by conf-threshold
@@ -260,7 +270,7 @@ class YOLOv8Seg:
             cv2.rectangle(im, (int(box[0]), int(box[1])), (int(box[2]), int(box[3])),
                           self.color_palette(int(cls_), bgr=True), 1, cv2.LINE_AA)
             cv2.putText(im, f'{self.classes[cls_]}', (int(box[0]), int(box[1] - 9)),
-                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, self.color_palette(int(cls_), bgr=True), 1, cv2.LINE_AA)
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.7, self.color_palette(int(cls_), bgr=True), 1, cv2.LINE_AA)
 
         # Mix image
         im = cv2.addWeighted(im_canvas, 0.3, im, 0.7, 0)
@@ -280,18 +290,18 @@ class DepthEstimationModel:
         self.context = self.engine.create_execution_context()
 
         # 获取输入和输出的绑定信息
-        self.num_bindings = self.engine.num_io_tensors
+        self.num_bindings = self.engine.num_bindings
         self.inputs = []
         self.outputs = []
         self.bindings = []
         for binding_index in range(self.num_bindings):
-            binding_name = self.engine.get_tensor_name(binding_index)
-            dtype = self.engine.get_tensor_dtype(binding_name)
-            shape = self.engine.get_tensor_shape(binding_name)
-            size = trt.volume(shape) * np.dtype(np.float32).itemsize
-            host_mem = np.empty(shape, dtype=np.float32)
+            binding_name = self.engine.get_binding_name(binding_index)  # TensorRT 8 equivalent API
+            dtype = trt.nptype(self.engine.get_binding_dtype(binding_name))
+            shape = self.engine.get_binding_shape(binding_name)
+            size = trt.volume(shape) * np.dtype(dtype).itemsize
+            host_mem = np.empty(shape, dtype=dtype)
             device_mem = cuda.mem_alloc(host_mem.nbytes)
-            if self.engine.get_tensor_mode(binding_name) == trt.TensorIOMode.INPUT:
+            if self.engine.binding_is_input(binding_name):
                 self.inputs.append({"host": host_mem, "device": device_mem})
             else:
                 self.outputs.append({"host": host_mem, "device": device_mem})
@@ -386,8 +396,8 @@ if __name__ == '__main__':
     '''
     这里放模型路径
     '''
-    model_path = "yolov8m-seg.engine"
-    model_path_depth = "rt_18.engine"
+    model_path = "yolom.engine"
+    model_path_depth = "rt_fp16.engine"
     # 实例化模型
     model = YOLOv8Seg(model_path)
     model_depth = DepthEstimationModel(model_path_depth)
@@ -397,8 +407,8 @@ if __name__ == '__main__':
     # 摄像头图像分割
     cap = cv2.VideoCapture(0)
     # 设置视频帧大小
-    #cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
-    #cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+    cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
+    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 
     # 摄像头参数
     focal_length_mm = 3.0
@@ -421,8 +431,6 @@ if __name__ == '__main__':
             disp_pred = cv2.GaussianBlur(disp_pred, (5, 5), 0)
 
             depth_map = calculate_depth(disp_pred, focal_length_pixels, baseline)
-            print("depth_map min:", np.min(depth_map))
-            print("depth_map max:", np.max(depth_map))
 
             # YOLO推理
             boxes, segments, _ = model(left_image, conf_threshold=conf, iou_threshold=iou)
@@ -441,7 +449,7 @@ if __name__ == '__main__':
                     x1, y1 = int(box[0]), int(box[1])
                     depth /= 1000
                     depth_text = f"{depth:.1f} m"
-                    cv2.putText(output_image, depth_text, (x1, y1 - 30), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 1)
+                    cv2.putText(output_image, depth_text, (x1, y1 - 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 1)
             else:
                 output_image = left_image
 

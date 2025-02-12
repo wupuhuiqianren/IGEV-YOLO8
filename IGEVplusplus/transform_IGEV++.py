@@ -97,7 +97,7 @@ def demo(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--restore_ckpt', help="restore checkpoint",
+    parser.add_argument('--restore_ckpt', help="put your dir of .pth model here",
                         default="IGEVplusplus/pretrained_models/igev_plusplus/sceneflow.pth")
     parser.add_argument('--save_numpy', action='store_true', help='save output as numpy arrays')
     parser.add_argument('-l', '--left_imgs', help="path to all first (left) frames",
