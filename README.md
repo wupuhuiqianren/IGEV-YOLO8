@@ -23,7 +23,9 @@ conda create -n IGEV_YOLO python=3.8
 conda activate IGEV_YOLO
 ```
 安装cuda和pytorch和tensorrt，参考官网选择对应版本。  
-我使用的是cuda 11.6,pytorch 1.13.1,tensorrt 10.6  
+我使用的是cuda 11.6,pytorch 1.13.1,tensorrt 12.6  
+
+注意：tensorrt大版本间部分api名称不同，我提供了对应的python文件，请根据实际情况选用。
 
 安装所需要的依赖库  
 ```bash
