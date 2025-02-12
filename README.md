@@ -97,7 +97,7 @@ trtexec --onnx=your_name_of_onnx_model.onnx  --saveEngine=your_name_of_engine.en
     sensor_width_mm = 8.47
     image_width = 640
     focal_length_pixels = (focal_length_mm * image_width) / sensor_width_mm
-```
+``` 
 改为你的模型路径
 ```python
     '''
