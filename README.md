@@ -121,7 +121,8 @@ trtexec --onnx=your_name_of_onnx_model.onnx  --saveEngine=your_name_of_engine.en
 我使用的是图为版Jetson AGX Orin, 出厂系统Jetpack 5.0.1，出厂自带tensorrt 8.4版本,cuda 11.4版本。  
 然而igev++模型使用了grid_sample算子，这一算子在tensorrt 8.5版本及以上才能够支持，而Jetson由于框架限制，版本兼容性低，  
 因此需要将对应的cuda升级到11.8版本来支持tensorrt 8.5，并安装pyorch(2.0版本及以上)，或者对应更高版本，  
-具体根据[官网](https://developer.nvidia.com/nvidia-tensorrt-8x-download)进行正确的版本选择，以及相应的pytorch版本。
+具体根据[官网](https://developer.nvidia.com/nvidia-tensorrt-8x-download)进行正确的版本选择，以及相应的pytorch版本。  
+
 如果你使用英伟达原厂的Jetson设备，那么出厂系统编号为5开头及以上的设备，可以同时安装两套cuda和tensorrt版本，  
 参考[官方指导视频](https://www.youtube.com/watch?v=_JgNA82325I&t)  
  
