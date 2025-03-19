@@ -108,7 +108,12 @@ trtexec --onnx=your_name_of_onnx_model.onnx  --saveEngine=your_name_of_engine.en
     model_path = "your_YOLO.engine" #PUT YOLO MODEL
     model_path_depth = "your_IGEV.engine" #PUT IGEV MODEL
 ```
-```python
 
 完成后运行这个python程序。
+
+# Jetpack部署
+## 环境配置
+我使用的是Jetson AGX Orin, 出厂系统Jetpack 5.0.1，出厂自带tensorrt 8.4版本,cuda 11.4版本。然而igev++模型使用了grid_sample算子，这一算子在tensorrt 8.6版本及以上才能够支持，因此需要将对应的cuda升级到11.6或11.8版本来支持tensorrt 8.6或10.x版本。
+如果你使用英伟达原厂的Jetson设备，那么出厂系统编号为5开头及以上的设备，可以同时安装两套cuda和tensorrt版本，参考[官方指导视频](https://www.youtube.com/watch?v=_JgNA82325I&t)
+如果你使用的是和我一样的国内版，则大概率存在硬件锁，无法安装官方文档方式升级系统版本，但是依然有办法解决，下面会进行说明。
 
