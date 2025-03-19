@@ -5,11 +5,16 @@ Conbine IGEV++ with YOLO8 segment，used for auto driving occasions
 这个项目基于 [YOLOv8](https://github.com/ultralytics/ultralytics) 和 [IGEV++](https://github.com/gangweiX/IGEV-plusplus)。  
 此项目融合了两种深度学习模型作为一个系统，实现YOLO进行目标检测和分割，IGEV++提取被检测目标与摄像头之间的距离信息，最后一起显示在摄像头输出画面上的功能。
 
+简单的效果展示，项目已部署在Jetson AGX Orin上
+
+https://github.com/user-attachments/assets/43714278-6011-4893-bc5b-b06206666e1c
+
 # 项目内容
 1.Windows 平台部署   
 2.Jetpack AGX Orin 平台部署  
 
 # Windows 部署
+
 ## 运行环境
 参考IGEVplusplus文件夹内的readme.md  
 推荐使用cuda11.4及以上,tensorrt8.5.1及以上，pytorch版本根据cuda对应  
