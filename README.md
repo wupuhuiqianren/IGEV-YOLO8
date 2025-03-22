@@ -61,8 +61,9 @@ parser.add_argument('--restore_ckpt', help="put your dir of .pth model here",
 default="IGEVplusplus/pretrained_models/igev_plusplus/sceneflow.pth")
 ```
 
-[pth推理结果](https://github.com/user-attachments/assets/1efd537a-4904-42e8-8a7b-94a0fe17c788)
-[onnx推理结果](https://github.com/user-attachments/assets/ac33f540-9916-43ac-89cb-d7b342c954eb)
+![pth推理结果](https://github.com/user-attachments/assets/1efd537a-4904-42e8-8a7b-94a0fe17c788)
+![onnx推理结果](https://github.com/user-attachments/assets/ac33f540-9916-43ac-89cb-d7b342c954eb)  
+可以看到转换的精度损失是很小的，说明转换成功。
 
 转换完成得到ONNX模型后，可以使用onnxsim工具简化模型，你需要先安装相关的库，这是我使用的版本。
 | Package                  | Version | Source   | Channel |
