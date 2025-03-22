@@ -76,7 +76,7 @@ default="IGEVplusplus/pretrained_models/igev_plusplus/sceneflow.pth")
 
 使用以下命令行语句简化onnx模型
 ```bash
-onnxsim your_input_model_name.onnx your_output_model_name.onnx
+onnxsim your_original_model_name.onnx your_simplified_model_name.onnx
 ```
 
 
