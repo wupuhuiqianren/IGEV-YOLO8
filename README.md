@@ -129,12 +129,27 @@ trtexec --onnx=your_name_of_onnx_model.onnx  --saveEngine=your_name_of_engine.en
 # Jetpack部署
 ## 环境配置
 我使用的是图为版Jetson AGX Orin, 出厂系统Jetpack 5.0.1，出厂自带tensorrt 8.4版本,cuda 11.4版本。  
-然而igev++模型使用了grid_sample算子，这一算子在tensorrt 8.5版本及以上才能够支持，而Jetson由于框架限制，版本兼容性低，  
-因此需要将对应的cuda升级到11.8版本来支持tensorrt 8.5，并安装pyorch(2.0版本及以上)，或者对应更高版本，  
-具体根据[官网](https://developer.nvidia.com/nvidia-tensorrt-8x-download)进行正确的版本选择，以及相应的pytorch版本。  
+然而igev++模型使用了grid_sample算子，这一算子在tensorrt 8.5版本及以上才能够支持，因此需要升级tensorrt版本。
+当然你也可以升级cuda和pytorch版本，来兼容更高的tensorrt版本。最低要求是tensorrt 8.5。
 
 如果你使用英伟达原厂的Jetson设备，那么出厂系统编号为5开头及以上的设备，可以同时安装两套cuda和tensorrt版本，  
 参考[官方指导视频](https://www.youtube.com/watch?v=_JgNA82325I&t)  
  
 如果你使用的是和我一样的国内改装版，则大概率存在硬件锁，无法使用官方文档提供的方式升级系统版本，但是依然有办法解决，下面会进行说明。
+从[这个网址](https://repo.download.nvidia.cn/jetson/#Jetpack%205.1)下载  
 
+libcudnn8-dev_8.6.0.166-1+cuda11.4_arm64.deb  
+libcudnn8-samples_8.6.0.166-1+cuda11.4_arm64.deb  
+libcudnn8_8.6.0.166-1+cuda11.4_arm64.deb  
+
+卸载原来的版本，安装此版本。虽然Jetpack 5.1.x系统才对tensorrt 8.6支持，但是经过实践发现Jetpack 5.0.x版本可以正常使用这一套cuda11.4和tensorrt 8.6的组合。
+
+```bash
+sudo dpkg -i libcudnn8_8.6.0.166-1+cuda11.4_arm64.deb
+sudo dpkg -i libcudnn8-dev_8.6.0.166-1+cuda11.4_arm64.deb
+sudo dpkg -i libcudnn8-samples_8.6.0.166-1+cuda11.4_arm64.deb
+```
+
+谨慎更改国内版Jetson的cuda版本，容易导致未知原因的黑屏或无法开机问题，以上方案仅需要更换tensorrt版本，因此推荐使用。 
+如果你从官网https://developer.nvidia.com/nvidia-tensorrt-8x-download查找版本，  
+会发现ARM SBSA分类下没有cuda 11.4 + tensorrt 8.6 的选择，只能找到至少是cuda 11.8 + tensorrt 8.5的组合,因为我们需要的tensorrt版本最低为8.5。
