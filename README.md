@@ -75,9 +75,9 @@ default="IGEVplusplus/pretrained_models/igev_plusplus/sceneflow.pth")
 | onnxsim                   | 0.4.36  | pypi     | pypi    |
 
 使用以下命令行语句简化onnx模型
-'''bash
+```bash
 onnxsim your_input_model_name.onnx your_output_model_name.onnx
-'''
+```
 
 
 如果你需要使用Tensorrt加速，务必安装8.5.1版本及以上，否则转换模型时会遇到不支持的算子grid_sample。确保你的cuda,pytorch版本匹配，如果没有安装pycuda，务必安装相应的版本，否则也可能造成转换失败。  
