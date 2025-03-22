@@ -154,3 +154,4 @@ sudo dpkg -i libcudnn8-samples_8.6.0.166-1+cuda11.4_arm64.deb
 如果你从官网  https://developer.nvidia.com/nvidia-tensorrt-8x-download  查找版本，  
 会发现ARM SBSA分类下没有cuda 11.4 + tensorrt 8.6 的选择，只能找到至少是cuda 11.8 + tensorrt 8.5的组合,因为我们需要的tensorrt版本最低为8.5。
 笔者尝试后设备无法正常开机，只能用原厂硬盘刷机。
+
