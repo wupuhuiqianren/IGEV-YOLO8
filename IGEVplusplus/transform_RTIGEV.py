@@ -99,12 +99,12 @@ def demo(args):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--restore_ckpt', help="put your dir of .pth model here",
-                        default="IGEVplusplus/pretrained_models/igev_rt/sceneflow.pth")
+                        default="D:\IGEV-YOLO8\IGEVplusplus\pretrained_models\igev_rt\sceneflow.pth")
     parser.add_argument('--save_numpy', action='store_true', help='save output as numpy arrays')
     parser.add_argument('-l', '--left_imgs', help="path to all first (left) frames",
-                        default="IGEVplusplus/demo-imgs/*/im0.png")
+                        default="D:\IGEV-YOLO8\IGEVplusplus\demo-imgs\im0.png")
     parser.add_argument('-r', '--right_imgs', help="path to all second (right) frames",
-                        default="IGEVplusplus/demo-imgs/*/im1.png")
+                        default="D:\IGEV-YOLO8\IGEVplusplus\demo-imgs\im1.png")
     parser.add_argument('--output_directory', help="directory to save output",
                         default="IGEVplusplus/demo_output")
     parser.add_argument('--mixed_precision', action='store_true', default=True, help='use mixed precision')
