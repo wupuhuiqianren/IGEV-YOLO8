@@ -193,7 +193,7 @@ After that, run the Python program to perform inference.
 # Jetpack 部署 / Jetson (Jetpack) Deployment
 ## 环境配置 / Environment Setup
 我使用的是图为版 Jetson AGX Orin，出厂系统为 Jetpack 5.0.1，预装 TensorRT 8.4 和 CUDA 11.4。  
-I used a modified Jetson AGX Orin with the factory system Jetpack 5.0.1, which comes pre-installed with TensorRT 8.4 and CUDA 11.4.
+I used a Chinese modified Jetson AGX Orin with the factory system Jetpack 5.0.1, which comes pre-installed with TensorRT 8.4 and CUDA 11.4.
 
 然而 IGEV++ 模型使用 grid_sample 算子，该算子在 TensorRT 8.5 及以上版本才能支持，因此需要升级 TensorRT 版本。  
 However, the IGEV++ model uses the grid_sample operator, which is supported only in TensorRT 8.5 and above, so an upgrade is necessary.
@@ -229,12 +229,14 @@ sudo dpkg -i libcudnn8-samples_8.6.0.166-1+cuda11.4_arm64.deb
 ```
 
 谨慎更改国内版Jetson的cuda版本，容易导致未知原因的黑屏或无法开机问题，以上方案仅需要更换tensorrt版本，因此推荐使用。    
-Be cautious when modifying the CUDA version on modified domestic Jetson devices, as it may cause black screens or boot failures. The above solution only requires upgrading TensorRT, which is recommended.  
+Be cautious when modifying the CUDA version on modified Chinese Jetson devices, as it may cause black screens or boot failures. The above solution only requires upgrading TensorRT, which is recommended.   
+
 如果你从官网  https://developer.nvidia.com/nvidia-tensorrt-8x-download  查找版本，    
-会发现ARM SBSA分类下没有cuda 11.4 + tensorrt 8.6 的选择，只能找到至少是cuda 11.8 + tensorrt 8.5的组合,因为我们需要的tensorrt版本最低为8.5。  
-笔者尝试后设备无法正常开机，只能刷机。而且国内版无法通过官网方法刷入其他版本的Jetpack，只要不是厂商硬盘刷机，都无法正常开机，怀疑是有硬件锁的原因。    
+会发现ARM SBSA分类下没有cuda 11.4 + tensorrt 8.6 的选择，只能找到至少是cuda 11.8 + tensorrt 8.5的组合,因为我们需要的tensorrt版本最低为8.5。   
 If you check the NVIDIA TensorRT 8.x download page, you’ll notice that under the ARM SBSA category there is no option for CUDA 11.4 + TensorRT 8.6; the available option is at least CUDA 11.8 + TensorRT 8.5.  
-fter my attempts, the device could not boot normally and could only be re-flashed. Moreover, the domestic version cannot be flashed with other versions of Jetpack through the official method—as long as it isn't flashed using the manufacturer's drive, it won't boot normally. I suspect this is due to a hardware lock.  
+
+笔者尝试后设备无法正常开机，只能刷机。而且国内版无法通过官网方法刷入其他版本的Jetpack，只要不是厂商硬盘刷机，都无法正常开机，怀疑是有硬件锁的原因。    
+After my attempts, the device could not boot normally and could only be re-flashed. Moreover, the domestic version cannot be flashed with other versions of Jetpack through the official method—as long as it isn't flashed using the manufacturer's drive, it won't boot normally. I suspect this is due to a hardware lock.  
 
 你需要在Jetpack上先完成miniforge的安装，此类教程网上非常多，此处不再赘述。  
 创建虚拟环境后，与windows部署一样，安装相应的库，流程也相同。    
