@@ -171,4 +171,4 @@ ctypes.CDLL("/usr/lib/aarch64-linux-gnu/libnvinfer_plugin.so", mode=ctypes.RTLD_
 trt.init_libnvinfer_plugins(TRT_LOGGER, namespace="")
 ```
 请按照流程在Jetpack上生成tensorrt模型后，修改 igev_seg_Jetpack.py 中相应的参数，如模型路径，摄像头参数，完成后运行这个python文件即可。  
-igev_seg_Jetpack_ros2.py 在 igev_seg_Jetpack.py 的基础上，增加了使用ros2发送处理结果的功能，可用于大项目的总线通信。
+igev_seg_Jetpack_ros2.py 在 igev_seg_Jetpack.py 的基础上，增加了使用ros2发送处理结果的功能，可后续用于复合项目的总线通信。
