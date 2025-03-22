@@ -155,3 +155,18 @@ sudo dpkg -i libcudnn8-samples_8.6.0.166-1+cuda11.4_arm64.deb
 会发现ARM SBSA分类下没有cuda 11.4 + tensorrt 8.6 的选择，只能找到至少是cuda 11.8 + tensorrt 8.5的组合,因为我们需要的tensorrt版本最低为8.5。
 笔者尝试后设备无法正常开机，只能刷机。而且国内版无法通过官网方法刷入其他版本的Jetpack，只要不是厂商硬盘刷机，都无法正常开机，怀疑是有硬件锁的原因。
 
+你需要在Jetpack上先完成miniforge的安装，此类教程网上非常多，此处不再赘述。
+创建虚拟环境后，与windows部署一样，安装相应的库，流程也相同。
+
+最大的区别在于 Jetpack 使用 tensorrt 时，需要手动加载插件，相应代码在对应的 igev_seg_Jetpack.py 中已经加入。
+```python
+import ctypes
+
+# TensorRT Logger
+TRT_LOGGER = trt.Logger(trt.Logger.VERBOSE)
+# 手动加载插件库
+ctypes.CDLL("/usr/lib/aarch64-linux-gnu/libnvinfer_plugin.so", mode=ctypes.RTLD_GLOBAL)
+
+# 注册所有插件
+trt.init_libnvinfer_plugins(TRT_LOGGER, namespace="")
+```
