@@ -153,5 +153,5 @@ sudo dpkg -i libcudnn8-samples_8.6.0.166-1+cuda11.4_arm64.deb
 谨慎更改国内版Jetson的cuda版本，容易导致未知原因的黑屏或无法开机问题，以上方案仅需要更换tensorrt版本，因此推荐使用。 
 如果你从官网  https://developer.nvidia.com/nvidia-tensorrt-8x-download  查找版本，  
 会发现ARM SBSA分类下没有cuda 11.4 + tensorrt 8.6 的选择，只能找到至少是cuda 11.8 + tensorrt 8.5的组合,因为我们需要的tensorrt版本最低为8.5。
-笔者尝试后设备无法正常开机，只能用原厂硬盘刷机。
+笔者尝试后设备无法正常开机，只能刷机。而且国内版无法通过官网方法刷入其他版本的Jetpack，只要不是厂商硬盘刷机，都无法正常开机，怀疑是有硬件锁的原因。
 
