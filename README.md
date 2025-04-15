@@ -5,7 +5,7 @@ Combine IGEV++ with YOLO8 segmentation, used for autonomous driving applications
 ---
 
 # 项目说明 / Project Description
-这个项目基于 [YOLOv8](https://github.com/ultralytics/ultralytics) 和 [IGEV++](https://github.com/gangweiX/IGEV-plusplus)。  
+这个项目基于 [YOLOv8_Sharp](https://github.com/dme-compunet/YoloSharp) 和 [IGEV++](https://github.com/gangweiX/IGEV-plusplus)。  
 This project is based on [YOLOv8](https://github.com/ultralytics/ultralytics) and [IGEV++](https://github.com/gangweiX/IGEV-plusplus).
 
 此项目融合了两种深度学习模型作为一个系统，实现 YOLO 进行目标检测和分割，IGEV++ 提取被检测目标与摄像头之间的距离信息，最后一起显示在摄像头输出画面上。    
