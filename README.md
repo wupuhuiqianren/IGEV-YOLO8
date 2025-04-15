@@ -207,8 +207,8 @@ If you are using an official NVIDIA Jetson device (system version starting with 
 如果你使用的是国内改装版，可能存在硬件锁，无法使用官方文档提供的方式升级系统版本，但依然有解决方法。  
 If you are using a domestically modified version, there might be a hardware lock that prevents upgrading the system version using official methods, but there are workarounds.
 
-从 此网址 下载以下三个 deb 文件：  
-Download the following three deb files from this website:
+从 [此网址](https://repo.download.nvidia.cn/jetson/#Jetpack%205.1) 下载以下三个 deb 文件：  
+Download the following three deb files from this [website](https://repo.download.nvidia.cn/jetson/#Jetpack%205.1):
 
     libcudnn8-dev_8.6.0.166-1+cuda11.4_arm64.deb
 
