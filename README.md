@@ -201,8 +201,8 @@ However, the IGEV++ model uses the grid_sample operator, which is supported only
 当然，你也可以升级 CUDA 和 PyTorch 版本以兼容更高版本的 TensorRT，但最低要求是 TensorRT 8.5。  
 Alternatively, you can upgrade CUDA and PyTorch to be compatible with higher versions of TensorRT, but the minimum requirement is TensorRT 8.5.
 
-如果你使用 NVIDIA 原厂的 Jetson 设备，出厂系统版本号以 5 开头及以上的设备可以同时安装两套 CUDA 和 TensorRT 版本，参考 官方指导视频。  
-If you are using an official NVIDIA Jetson device (system version starting with 5 or higher), you can install two sets of CUDA and TensorRT versions concurrently; refer to the official tutorial video.
+如果你使用 NVIDIA 原厂的 Jetson 设备，出厂系统版本号以 5 开头及以上的设备可以同时安装两套 CUDA 和 TensorRT 版本，参考 [官方指导视频](https://www.youtube.com/watch?v=_JgNA82325I)。  
+If you are using an official NVIDIA Jetson device (system version starting with 5 or higher), you can install two sets of CUDA and TensorRT versions concurrently; refer to the [official tutorial video](https://www.youtube.com/watch?v=_JgNA82325I).
 
 如果你使用的是国内改装版，可能存在硬件锁，无法使用官方文档提供的方式升级系统版本，但依然有解决方法。  
 If you are using a domestically modified version, there might be a hardware lock that prevents upgrading the system version using official methods, but there are workarounds.
