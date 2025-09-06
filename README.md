@@ -148,7 +148,7 @@ If you see the version information and "passed", the installation is successful.
 进入模型所在文件夹，并运行以下命令（请将 “your_name_of_onnx_model” 替换为你的 ONNX 模型名称，“your_name_of_engine” 替换为你想要的 TensorRT 模型名称）：  
 Navigate to the folder containing your model and run:
 ```bash
-trtexec --onnx=your_name_of_onnx_model.onnx  --saveEngine=your_name_of_engine.engine --fp16
+trtexec --onnx=your_name_of_onnx_model.onnx  --saveEngine=your_name_of_engine.engine --fp16 --minShapes=left:1x3x{your Height}x{your Width},right:1x3x{your Height}x{your Width} --optShapes=left:1x3x{your Height}x{your Width},right:1x3x{your Height}x{your Width} --maxShapes=left:1x3x{your Height}x{your Width},right:1x3x{your Height}x{your Width}
 ```
 
 转换完成后，可以使用 igev_yolo_segment.py 在 Windows 上运行推理。  
